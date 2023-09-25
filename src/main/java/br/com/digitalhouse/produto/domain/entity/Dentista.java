@@ -38,11 +38,11 @@ public class Dentista {
     @Column(nullable=false)
     private UUID contato_id;
     @ManyToMany(mappedBy = "Dentistas")
-    private Set<Clinica> clinicas;
+    private Set<Clinica> Clinicas;
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private Set<Consulta> consultas;
+    @JoinColumn(name = "id_consultas")
+    private Set<Consulta> Consultas;
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private Set<Contato> contato;
+    @JoinColumn(name = "id_contato")
+    private Set<Contato> Contato;
 }

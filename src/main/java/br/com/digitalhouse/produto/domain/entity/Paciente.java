@@ -18,25 +18,25 @@ public class Paciente {
 @Id
 @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-@Column(nullable = false)
+    @Column(nullable = false)
     private String nome;
-@Column(nullable = false)
+    @Column(nullable = false)
     private LocalDate data_nascimento;
-@Column(nullable = false)
-    private UUID endereco_id;
-@Column(nullable = false)
+//    @Column(nullable = false)
+//    private UUID id_endereco;
+    @Column(nullable = false)
     private LocalDate criado_em;
-@Column(nullable = false)
+    @Column(nullable = false)
     private LocalDate atualizado_em;
-@Column(length = 1)
+    @Column(length = 1)
     private EnumSexo sexo;
-@Column(nullable = false)
+    @Column(nullable = false)
     private UUID contato_id;
-@OneToMany(cascade = CascadeType.ALL)
-@JoinColumn(name = "paciente_id")
-private Set<Consulta> consultas;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_paciente")
+    private Set<Consulta> Consultas;
 
-//@OneToOne(cascade = CascadeType.ALL)
-//@JoinColumn(name = "endereco_id", referencedColumnName= "id")
-//private Endereco endereco;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_endereco", referencedColumnName= "id")
+    private Endereco endereco;
 }

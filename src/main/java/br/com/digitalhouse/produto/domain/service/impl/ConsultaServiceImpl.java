@@ -1,14 +1,45 @@
 package br.com.digitalhouse.produto.domain.service.impl;
 
 import br.com.digitalhouse.produto.domain.entity.Consulta;
+import br.com.digitalhouse.produto.domain.repository.ConsultaRepository;
+import br.com.digitalhouse.produto.domain.service.ConsultaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface ConsultaServiceImpl {
-    Consulta createConsulta(Consulta consulta);
-    Consulta updateConsulta(Consulta consulta);
-    Consulta readConsulta(UUID id);
-    List<Consulta> readConsultas();
-    void deleteConsulta(UUID id);
+@Service
+public class ConsultaServiceImpl implements ConsultaService {
+    private ConsultaRepository consultaService;
+
+    @Autowired
+    public ConsultaServiceImpl(ConsultaRepository consultaRepository) {
+        this.consultaService = consultaService;
+    }
+
+    @Override
+    public Consulta createConsulta(Consulta consulta) {
+        return this.consultaService.save(consulta);
+    }
+
+    @Override
+    public Consulta updateConsulta(Consulta consulta) {
+        return this.consultaService.save(consulta);
+    }
+
+    @Override
+    public Consulta readConsulta(UUID id) {
+        return this.consultaService.findById(id).orElseThrow();
+    }
+
+    @Override
+    public List<Consulta> readConsultas() {
+        return this.consultaService.findAll();
+    }
+
+    @Override
+    public void deleteConsulta(UUID id) {
+        this.consultaService.deleteById(id);
+    }
 }

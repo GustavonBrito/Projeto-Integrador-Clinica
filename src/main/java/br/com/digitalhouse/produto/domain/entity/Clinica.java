@@ -1,5 +1,8 @@
                 package br.com.digitalhouse.produto.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +11,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,6 +21,10 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @Table(name = "Clinica")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Clinica {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -27,16 +35,20 @@ public class Clinica {
     private String cnpj;
     @Column(nullable = false)
     private String razao_social;
-    @Column(updatable = false)
+
     private Instant created_at;
-    @Column(updatable = false)
+
     private Instant updated_at;
-    @Column(updatable = false)
+    @Column(nullable = false)
     private String descricao;
-    @Column(updatable = false)
-    private UUID endereco_id;
-    @Column(updatable = false)
-    private UUID contato_id;
+//    @Column(nullable = false)
+//    private UUID endereco_id;
+//    @Column(nullable = false)
+//    private UUID contato_id;
+//    @Column(nullable = false)
+//    private Endereco endereco;
+//    @Column(nullable = false)
+//    private Contato contato;
 
     @ManyToMany
     @JoinTable(
@@ -47,14 +59,25 @@ public class Clinica {
     private Set<Dentista> Dentistas;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "clinica_id")
-    private Set<Consulta> consultas;
+    @JoinColumn(name = "id_clinica")
+    private Set<Consulta> Consultas;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "clinica_id")
-    private Set<Endereco> enderecos;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "id_clinica")
+//    private List<Endereco> Enderecos;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "clinica_id")
-    private Set<Contato> contatos;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "id_clinica")
+//    private Set<Contato> Contatos;
+//    @OneToMany(mappedBy = "clinica")
+//    @JsonIgnore
+//    private List<Contato> contatos;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_contato", referencedColumnName= "id")
+    private Contato contato;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_endereco", referencedColumnName= "id")
+    private Endereco endereco;
 }

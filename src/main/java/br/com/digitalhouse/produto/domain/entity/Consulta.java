@@ -18,9 +18,10 @@ public class Consulta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private UUID paciente_id;
+    private UUID id_paciente;
     private UUID dentista_id;
-    private UUID clinica_id;
+//    private UUID id_clinica;
+    private UUID id_consultas;
     @Column(nullable = false, length = 80)
     private Date dataConsulta;
     private Date created_at;
@@ -30,7 +31,9 @@ public class Consulta {
     private Boolean cancelada;
     @Column(nullable = false, length = 80)
     private String motivoCancelamento;
-
+    @ManyToOne
+    @JoinColumn(name = "id_clinica")
+    private Clinica clinica;
 // Add getters and setters
 
 }

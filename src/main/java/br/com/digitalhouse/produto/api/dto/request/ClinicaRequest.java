@@ -6,6 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CNPJ;
 
+import java.sql.Connection;
+import java.time.Instant;
+import java.util.UUID;
+
 @Getter
 @Setter
 public class ClinicaRequest {
@@ -16,4 +20,8 @@ public class ClinicaRequest {
     @NotNull
     private String razao_social;
     private String descricao;
+    private EnderecoRequest enderecoRequest;
+    private ContatoRequest contatoRequest;
+//    private Instant created_at;
+//    private Instant updated_at;
 }
