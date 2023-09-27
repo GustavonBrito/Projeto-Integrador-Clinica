@@ -29,7 +29,7 @@ public class ClinicaServiceImpl implements ClinicaService {
     }
 
     @Override
-    public Clinica readClinica(UUID id) {
+    public Clinica readClinicabyId(UUID id) {
         return this.clinicaRepository.findById(id).orElseThrow();
     }
 

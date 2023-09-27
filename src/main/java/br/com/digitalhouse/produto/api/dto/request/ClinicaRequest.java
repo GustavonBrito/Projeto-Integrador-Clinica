@@ -1,7 +1,9 @@
 package br.com.digitalhouse.produto.api.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CNPJ;
@@ -17,11 +19,12 @@ public class ClinicaRequest {
     private String cnpj;
     @NotBlank
     private String nome;
-    @NotNull
+    @NotBlank
+    @Size(min = 5)
     private String razao_social;
+    @NotBlank
     private String descricao;
+
     private EnderecoRequest enderecoRequest;
     private ContatoRequest contatoRequest;
-//    private Instant created_at;
-//    private Instant updated_at;
 }

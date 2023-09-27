@@ -8,7 +8,7 @@ import java.util.UUID;
 public interface ClinicaService {
     Clinica createClinica(Clinica clinica);
     Clinica updateClinica(Clinica clinica);
-    Clinica readClinica(UUID id);
+    Clinica readClinicabyId(UUID id);
     List<Clinica>readAllClinicas();
     void deleteClinica(UUID id);
 }

@@ -1,6 +1,7 @@
 package br.com.digitalhouse.produto.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import java.util.UUID;
         property = "id"
 )
 @Table(name = "Contato")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Contato {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,4 +43,9 @@ public class Contato {
 //    private Clinica clinica;
     @OneToOne(mappedBy = "contato")
     private Clinica clinica;
+
+    public Contato(String email, String telefone) {
+        this.email = email;
+        this.telefone = telefone;
+    }
 }
