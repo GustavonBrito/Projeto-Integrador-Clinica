@@ -14,7 +14,7 @@ public class ConsultaServiceImpl implements ConsultaService {
     private ConsultaRepository consultaService;
 
     @Autowired
-    public ConsultaServiceImpl(ConsultaRepository consultaRepository) {
+    public ConsultaServiceImpl(ConsultaRepository consultaService) {
         this.consultaService = consultaService;
     }
 
@@ -34,7 +34,7 @@ public class ConsultaServiceImpl implements ConsultaService {
     }
 
     @Override
-    public List<Consulta> readConsultas() {
+    public List<Consulta> readAllConsultas() {
         return this.consultaService.findAll();
     }
 

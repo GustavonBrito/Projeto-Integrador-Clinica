@@ -8,6 +8,7 @@ import br.com.digitalhouse.produto.domain.entity.Contato;
 import br.com.digitalhouse.produto.domain.entity.Endereco;
 import br.com.digitalhouse.produto.domain.service.impl.ClinicaServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.apache.logging.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,16 @@ public class ClinicaControler {
     ResponseEntity<ClinicaWrapperResponse> getAllClinicas(){
         List<Clinica>clinicas =  clinicaServiceImpl.readAllClinicas();
         ClinicaWrapperResponse clinicaWrapperResponse = new ClinicaWrapperResponse();
-        enderecoResponse = new Endereco(enderecoResponse.getLogradouro(), enderecoResponse.getBairro(), enderecoResponse.getCidade(),enderecoResponse.getEstado(),enderecoResponse.getCep());
-        contatoResponse = new Contato(contatoResponse.getEmail(), contatoResponse.getTelefone());
+        if (this.enderecoResponse == null) {
+            return ResponseEntity.noContent().build();
+        } else{
+            enderecoResponse = new Endereco(enderecoResponse.getLogradouro(), enderecoResponse.getBairro(), enderecoResponse.getCidade(),enderecoResponse.getEstado(),enderecoResponse.getCep());
+        }
+        if (this.contatoResponse == null) {
+            return ResponseEntity.noContent().build();
+        } else{
+            contatoResponse = new Contato(contatoResponse.getEmail(), contatoResponse.getTelefone());
+        }
         clinicaWrapperResponse.setClinicas(clinicas.stream().map(clinica -> {
             ClinicaListResponse clinicaListResponse = new ClinicaListResponse();
             clinicaListResponse.setId(clinica.getId());
@@ -53,6 +62,7 @@ public class ClinicaControler {
             clinicaListResponse.setContato(contatoResponse);
             return clinicaListResponse;
         }).toList());
+
         return ResponseEntity.ok(clinicaWrapperResponse);
     }
     @PostMapping()
@@ -64,6 +74,9 @@ public class ClinicaControler {
         clinica.setDescricao(request.getDescricao());
         clinica.setCreated_at(Instant.now());
         clinica.setUpdated_at(null);
+        if (request.getRazao_social().length() <= 5){
+            ResponseEntity.badRequest().body("Razão Social deve ter um tamanho maior que 5");
+        }
 
         enderecoResponse = new Endereco();
         enderecoResponse.setLogradouro(request.getEnderecoRequest().getLogradouro());
@@ -86,22 +99,34 @@ public class ClinicaControler {
         return ResponseEntity.ok(clinicaCriada.getId());
     }
     @PutMapping("{id}")
-    ResponseEntity<?> updateClinica(@RequestBody ClinicaRequest clinicaRequest,@PathVariable UUID id){
+    ResponseEntity<?> updateClinica(@RequestBody @Valid ClinicaRequest clinicaRequest,@PathVariable UUID id){
        Clinica clinicaId = clinicaServiceImpl.readClinicabyId(id);
        clinicaId.setNome(clinicaRequest.getNome());
-        return ResponseEntity.ok(clinicaId);
+       clinicaId.setCnpj(clinicaRequest.getCnpj());
+       clinicaId.setRazao_social(clinicaRequest.getRazao_social());
+       clinicaId.setDescricao(clinicaRequest.getDescricao());
+       clinicaId.setUpdated_at(Instant.now());
+       enderecoResponse = new Endereco();
+       enderecoResponse.setLogradouro(clinicaRequest.getEnderecoRequest().getLogradouro());
+       enderecoResponse.setBairro(clinicaRequest.getEnderecoRequest().getBairro());
+       enderecoResponse.setCidade(clinicaRequest.getEnderecoRequest().getCidade());
+       enderecoResponse.setEstado(clinicaRequest.getEnderecoRequest().getEstado());
+       enderecoResponse.setCep(clinicaRequest.getEnderecoRequest().getCep());
+       contatoResponse = new Contato();
+       contatoResponse.setEmail(clinicaRequest.getContatoRequest().getEmail());
+       contatoResponse.setTelefone(clinicaRequest.getContatoRequest().getTelefone());
+       contatoResponse.setFax(clinicaRequest.getContatoRequest().getFax());
+       clinicaId.setEndereco(enderecoResponse);
+       clinicaId.setContato(contatoResponse);
+       Clinica clinicaUpdated = clinicaServiceImpl.updateClinica(clinicaId);
+       return ResponseEntity.ok(clinicaUpdated);
     }
-//        List<Empresa> empresas = empresaService.buscarEmpresas(termo);
-//    EmpresaWrapperResponse empresaWrapperResponse = new EmpresaWrapperResponse();
-//        empresaWrapperResponse.setEmpresas(empresas.stream().map(empresa -> {
-//        EmpresaListResponse empresaListResponse = new EmpresaListResponse();
-//        empresaListResponse.setId(empresa.getId());
-//        empresaListResponse.setNome(empresa.getNome());
-//        empresaListResponse.setCnpj(empresa.getCnpj());
-//        return empresaListResponse;
-//    }).toList());
-//        return ResponseEntity.ok(empresaWrapperResponse);
-//}
+
+    @DeleteMapping("{id}")
+    ResponseEntity<?> deleteClinica(@PathVariable UUID id){
+        clinicaServiceImpl.deleteClinica(id);
+        return ResponseEntity.ok().build();
+    }
     // Método abaixo coloca um objeto dentro de um objeto
     private ClinicaListResponse clinicaResponseByClinica (Clinica clinica){
         Endereco endereco = new Endereco();

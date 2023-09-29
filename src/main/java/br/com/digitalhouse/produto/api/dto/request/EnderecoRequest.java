@@ -1,5 +1,6 @@
 package br.com.digitalhouse.produto.api.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
@@ -13,7 +14,7 @@ import java.time.Instant;
 
 @Getter
 @Setter
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class EnderecoRequest {
     @NotBlank
     private String logradouro;

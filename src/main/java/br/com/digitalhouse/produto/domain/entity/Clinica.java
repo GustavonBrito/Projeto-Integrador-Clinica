@@ -41,14 +41,6 @@ public class Clinica {
     private Instant updated_at;
     @Column(nullable = false)
     private String descricao;
-//    @Column(nullable = false)
-//    private UUID endereco_id;
-//    @Column(nullable = false)
-//    private UUID contato_id;
-//    @Column(nullable = false)
-//    private Endereco endereco;
-//    @Column(nullable = false)
-//    private Contato contato;
 
     @ManyToMany
     @JoinTable(

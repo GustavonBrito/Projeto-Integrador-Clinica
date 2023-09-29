@@ -9,6 +9,6 @@ public interface ConsultaService {
     Consulta createConsulta(Consulta consulta);
     Consulta updateConsulta(Consulta consulta);
     Consulta readConsulta(UUID id);
-    List<Consulta> readConsultas();
+    List<Consulta> readAllConsultas();
     void deleteConsulta(UUID id);
 }

@@ -28,8 +28,7 @@ public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-//    private UUID id_clinica;
-    @Column(length = 100, nullable = false)
+
     private String logradouro;
     @Column(length = 100, nullable = false)
     private String bairro;
