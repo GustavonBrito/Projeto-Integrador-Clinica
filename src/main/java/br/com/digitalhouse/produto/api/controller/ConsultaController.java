@@ -56,24 +56,24 @@ public class ConsultaController {
         consulta.setMotivoCancelamento(consultaRequest.getMotivoCancelamento());
         paciente.setNome(consultaRequest.getPaciente().getNome());
         dentista.setNome(consultaRequest.getDentista().getNome());
-        consultaRequest.setPaciente(paciente);
-        consultaRequest.setDentista(dentista);
+        consulta.setClinica(paciente);
+        consulta.setDentista(dentista);
         Consulta consultaCriada = consultaServiceImpl.createConsulta(consulta);
         return ResponseEntity.ok(consultaCriada.getId());
     }
 
     @PutMapping("{id}")
     ResponseEntity<?>putConsulta(@RequestBody @Valid ConsultaRequest consultaRequest, @PathVariable  UUID id){
-        Consulta consulta = consultaServiceImpl.readConsulta(id);
-        consulta.setDataConsulta(consultaRequest.getDataConsulta());
-        consulta.setDescricao(consultaRequest.getDescricao());
-        consulta.setCancelada(consultaRequest.getCancelada());
-        consulta.setMotivoCancelamento(consultaRequest.getMotivoCancelamento());
+        Consulta consultaById = consultaServiceImpl.readConsulta(id);
+        consultaById.setDataConsulta(consultaRequest.getDataConsulta());
+        consultaById.setDescricao(consultaRequest.getDescricao());
+        consultaById.setCancelada(consultaRequest.getCancelada());
+        consultaById.setMotivoCancelamento(consultaRequest.getMotivoCancelamento());
         paciente.setNome(consultaRequest.getPaciente().getNome());
         dentista.setNome(consultaRequest.getDentista().getNome());
-        consultaRequest.setPaciente(paciente);
-        consultaRequest.setDentista(dentista);
-        Consulta consultaAtualizada = consultaServiceImpl.updateConsulta(consulta);
+        consultaById.setPaciente(paciente);
+        consultaById.setDentista(dentista);
+        Consulta consultaAtualizada = consultaServiceImpl.updateConsulta(consultaById);
         return ResponseEntity.ok(consultaAtualizada);
     }
     @DeleteMapping()

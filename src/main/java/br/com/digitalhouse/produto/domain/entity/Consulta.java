@@ -34,6 +34,8 @@ public class Consulta {
     private Boolean cancelada;
     @Column(nullable = false, length = 80)
     private String motivoCancelamento;
+//    private Paciente paciente;
+//    private Dentista dentista;
     @ManyToOne
     @JoinColumn(name = "id_clinica")
     private Clinica clinica;
