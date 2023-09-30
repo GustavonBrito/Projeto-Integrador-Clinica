@@ -20,11 +20,11 @@ import java.util.UUID;
 @Getter
 @Entity
 @NoArgsConstructor
-@Table(name = "Clinica")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
 )
+@Table(name = "Clinica")
 public class Clinica {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
