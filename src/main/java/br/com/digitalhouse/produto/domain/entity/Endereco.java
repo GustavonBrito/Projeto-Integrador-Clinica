@@ -1,7 +1,6 @@
 package br.com.digitalhouse.produto.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
@@ -10,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.UUID;
 
 
@@ -44,9 +42,6 @@ public class Endereco {
     private String cep;
     @OneToOne(mappedBy = "endereco")
     private Paciente paciente;
-//    @ManyToOne
-//    @JoinColumn(name = "id_clinica")
-//    private Clinica clinica;
     @OneToOne(mappedBy = "endereco")
     private Clinica clinica;
 

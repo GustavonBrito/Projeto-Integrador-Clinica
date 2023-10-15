@@ -9,6 +9,7 @@ public interface ClinicaService {
     Clinica createClinica(Clinica clinica);
     Clinica updateClinica(Clinica clinica);
     Clinica readClinicabyId(UUID id);
+    Clinica readClinicabyName(String nome);
     List<Clinica>readAllClinicas();
     void deleteClinica(UUID id);
 }

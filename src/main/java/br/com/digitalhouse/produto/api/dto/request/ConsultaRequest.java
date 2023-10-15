@@ -1,14 +1,14 @@
 package br.com.digitalhouse.produto.api.dto.request;
 
-import br.com.digitalhouse.produto.domain.entity.Dentista;
-import br.com.digitalhouse.produto.domain.entity.Paciente;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
-import java.sql.Date;
+
 import java.time.LocalDate;
+
 
 @Getter
 @Setter
@@ -20,8 +20,7 @@ public class ConsultaRequest {
     private Boolean cancelada;
     @NotBlank
     private String motivoCancelamento;
+    private DentistaRequest dentista;
+    private PacienteRequest paciente;
 
-    private Paciente paciente;
-
-    private Dentista dentista;
 }

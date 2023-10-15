@@ -7,8 +7,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -26,8 +24,6 @@ public class Contato {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-//    private UUID id_clinica;
-//    private UUID id_contato;
     @Column(length = 80, nullable = false)
     private String email;
     @Column(length = 80, nullable = false)
@@ -38,9 +34,6 @@ public class Contato {
     private LocalDate updated_at;
     @Column(length = 80, nullable = false)
     private String fax;
-//    @ManyToOne
-//    @JoinColumn(name = "id_clinica")
-//    private Clinica clinica;
     @OneToOne(mappedBy = "contato")
     private Clinica clinica;
 

@@ -1,17 +1,14 @@
                 package br.com.digitalhouse.produto.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-
 import java.time.Instant;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -24,6 +21,7 @@ import java.util.UUID;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
 )
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "Clinica")
 public class Clinica {
     @Id
@@ -34,6 +32,7 @@ public class Clinica {
     @Column(length = 20, nullable = false)
     private String cnpj;
     @Column(nullable = false)
+    @Size(min = 5)
     private String razao_social;
 
     private Instant created_at;
@@ -54,16 +53,9 @@ public class Clinica {
     @JoinColumn(name = "id_clinica")
     private Set<Consulta> Consultas;
 
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "id_clinica")
-//    private List<Endereco> Enderecos;
-
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "id_clinica")
-//    private Set<Contato> Contatos;
-//    @OneToMany(mappedBy = "clinica")
-//    @JsonIgnore
-//    private List<Contato> contatos;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_clinica")
+    private Set<Contato> Contatos;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_contato", referencedColumnName= "id")
@@ -72,4 +64,8 @@ public class Clinica {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_endereco", referencedColumnName= "id")
     private Endereco endereco;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_consulta", referencedColumnName= "id")
+    private Consulta consulta;
 }

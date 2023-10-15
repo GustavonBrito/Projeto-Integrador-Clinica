@@ -1,12 +1,12 @@
 package br.com.digitalhouse.produto.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Set;
@@ -17,11 +17,16 @@ import java.util.UUID;
 @Getter
 @Entity
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "Dentista")
 public class Dentista {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @Column(nullable=false)
     private String nome;
@@ -29,20 +34,25 @@ public class Dentista {
     private LocalDate data_nascimento;
     @Column(nullable=false)
     private String especialidade;
-    @Column(nullable=false)
+
     private Instant criado_em;
-    @Column(nullable = false)
+
     private Instant atualizado_em;
-    @Column(nullable=false)
+
     private EnumSexo enumSexo;
-    @Column(nullable=false)
+
     private UUID contato_id;
     @ManyToMany(mappedBy = "Dentistas")
     private Set<Clinica> Clinicas;
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_consultas")
-    private Set<Consulta> Consultas;
-    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_contato")
     private Set<Contato> Contato;
+    @OneToOne(mappedBy = "dentista")
+    private Consulta consulta;
+
+    public Dentista(String nome, LocalDate data_nascimento, String especialidade) {
+        this.nome = nome;
+        this.data_nascimento = data_nascimento;
+        this.especialidade = especialidade;
+    }
 }

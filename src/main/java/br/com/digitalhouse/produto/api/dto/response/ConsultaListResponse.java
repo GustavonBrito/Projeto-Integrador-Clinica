@@ -1,7 +1,8 @@
 package br.com.digitalhouse.produto.api.dto.response;
 
-import br.com.digitalhouse.produto.domain.entity.Clinica;
-import br.com.digitalhouse.produto.domain.entity.Consulta;
+
+import br.com.digitalhouse.produto.domain.entity.Dentista;
+import br.com.digitalhouse.produto.domain.entity.Paciente;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,5 +19,7 @@ public class ConsultaListResponse {
     private String descricao;
     private Boolean cancelada;
     private String motivoCancelamento;
-    private Clinica clinica;
+//    private Clinica clinica;
+    private Dentista dentista;
+    private Paciente paciente;
 }

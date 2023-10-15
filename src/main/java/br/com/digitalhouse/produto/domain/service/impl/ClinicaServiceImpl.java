@@ -18,6 +18,12 @@ public class ClinicaServiceImpl implements ClinicaService {
     public void ClinicaServiceImpl(ClinicaRepository clinicaRepository) {
         this.clinicaRepository = clinicaRepository;
     }
+
+    @Override
+    public Clinica readClinicabyName(String nome) {
+        return clinicaRepository.findByAtributo(nome);
+    }
+
     @Override
     public Clinica createClinica(Clinica clinica) {
         return this.clinicaRepository.save(clinica);

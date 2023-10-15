@@ -22,8 +22,6 @@ public class Paciente {
     private String nome;
     @Column(nullable = false)
     private LocalDate data_nascimento;
-//    @Column(nullable = false)
-//    private UUID id_endereco;
     @Column(nullable = false)
     private LocalDate criado_em;
     @Column(nullable = false)

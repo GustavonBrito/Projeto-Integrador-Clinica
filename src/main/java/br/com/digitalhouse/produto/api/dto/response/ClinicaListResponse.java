@@ -11,6 +11,7 @@ import java.util.UUID;
 @Setter
 public class ClinicaListResponse {
     private UUID id;
+
     private String nome;
     private String cnpj;
     private String razao_social;
